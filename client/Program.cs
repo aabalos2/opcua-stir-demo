@@ -2,6 +2,7 @@
 // The connection, subscription, and command-dispatch logic all live in
 // Services/PlcConnectionService.cs, not here.
 
+using StirClient;
 using StirClient.Commands;
 using StirClient.Services;
 
@@ -36,6 +37,10 @@ await Task.Delay(TimeSpan.FromSeconds(3));
 // same shape as WatchDogInstrumentUnresponsiveError handling. ===
 Console.WriteLine("\n=== Simulating an unreachable instrument (retries with backoff) ===");
 await ConnectWithRetryAsync(appConfig, WrongPortUrl, maxAttempts: 3);
+
+// === 4. The temperature/PID control-loop demo -- a separate plant on the
+// same server. See TemperatureDemo.cs. ===
+await TemperatureDemo.RunAsync(appConfig, ServerUrl);
 
 Console.WriteLine("\nDone.");
 return;
