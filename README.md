@@ -34,13 +34,12 @@ This mirrors patterns from real instrument-control software I work adjacent to:
 
 ## Running it
 
-```bash
-# terminal 1
-cd server
-npm install
-npm start
+The server has to be running before you start the client. In Rider:
 
-# terminal 2
-cd client
-dotnet run
-```
+Open a terminal.
+Run:
+cd server
+npm start
+Leave that terminal running — you should see:
+Mock PLC OPC UA server running at opc.tcp://.../stir-plc
+Then run/debug the client in Rider.
