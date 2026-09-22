@@ -1,0 +1,12 @@
+{
+  "name": "stir-plc-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "node-opcua": "^2.129.0"
+  }
+}
