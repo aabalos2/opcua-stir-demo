@@ -1,6 +1,6 @@
 # OPC UA + PID Control Demo
 
-A working example of an OPC UA client talking to a simulated PLC, plus a real PID temperature control loop layered on top — built to close two gaps at once: the hardware-interface layer I work adjacent to but haven't personally written, and classical control theory (PID, feedback stability, tuning), which I had no hands-on experience with at all before this.
+A working example of an OPC UA client talking to a simulated PLC, plus a real PID temperature control loop layered on top — built to close two gaps at once: the hardware-interface layer I work adjacent to, and classical control theory (PID, feedback stability, tuning).
 
 ## What's here
 
