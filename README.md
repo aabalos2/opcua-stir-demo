@@ -30,7 +30,7 @@ output = Kp * error + Ki * (running sum of error) + Kd * (rate of change of erro
 - **I** reacts to accumulated error over time, which is what actually eliminates that steady-state error — even a small persistent gap keeps adding up until it forces the error to zero.
 - **D** reacts to how fast the error is changing, damping overshoot — but it's sensitive to sensor noise, which is why `Temperature.ProcessValue` deliberately reports a noisy reading, not a clean one.
 
-### A real finding, not a scripted one: why the first version of the plant couldn't oscillate
+### A real finding: why the first version of the plant couldn't oscillate
 
 The first version of the temperature plant was a single first-order lag (temperature chases one equilibrium value). Running deliberately bad gains (Kp=20, no I or D) against it didn't produce the oscillation I expected — it produced a permanent steady-state error and a jittery *output*, but the actual temperature stayed in a tight band. The reason turned out to be a real, correct control-theory fact: **a single first-order lag under pure proportional control cannot sustain oscillation, no matter how high the gain** — it just converges faster, or with more offset. Real ovens and bioreactors oscillate when mistuned because they're *not* one lump of thermal mass; heat moves from a heater element, through the media, before a sensor ever sees it — a genuine phase lag between "I commanded more heat" and "the process responded."
 
