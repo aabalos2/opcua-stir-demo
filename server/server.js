@@ -8,6 +8,11 @@ const { OPCUAServer, Variant, DataType, StatusCodes } = require("node-opcua");
 const RAMP_RATE_RPM_PER_TICK = 15; // how fast the "motor" can accelerate
 const TICK_MS = 200;
 
+/**
+ * Starts the mock PLC: an OPC UA server exposing one stir motor
+ * (Stirring.TargetSpeed / ActualSpeed / Running) and a simulation loop
+ * that ramps ActualSpeed toward TargetSpeed over time.
+ */
 async function main() {
   const server = new OPCUAServer({
     port: 4840,
@@ -40,11 +45,14 @@ async function main() {
     nodeId: "s=Stirring.TargetSpeed",
     dataType: "Double",
     value: {
+      // Called when a client reads TargetSpeed.
       get: () => new Variant({ dataType: DataType.Double, value: targetSpeed }),
+      // Called when a client writes TargetSpeed -- this is the PLC's own
+      // validation, run before the value is accepted. A real PLC would
+      // reject an out-of-range command like this the same way.
       set: (variant) => {
         const value = variant.value;
         if (value < 0 || value > 1000) {
-          // a real PLC would reject an out-of-range command like this
           return StatusCodes.BadOutOfRange;
         }
         targetSpeed = value;
@@ -63,6 +71,9 @@ async function main() {
     nodeId: "s=Stirring.ActualSpeed",
     dataType: "Double",
     value: {
+      // No setter -- clients can't write this directly, only the
+      // simulation loop below updates it, the same way a real motor's
+      // actual speed isn't something you can just assign.
       get: () => new Variant({ dataType: DataType.Double, value: actualSpeed }),
     },
   });
