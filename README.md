@@ -8,6 +8,10 @@ A minimal, working example of an OPC UA client talking to a simulated PLC — bu
   - `Stirring.TargetSpeed` (writable) — the command target
   - `Stirring.ActualSpeed` (read/subscribe) — ramps toward the target over time, the way a real motor with inertia would, instead of jumping instantly
   - `Stirring.Running` (read/subscribe)
+
+It's a small Node.js program that starts an OPC UA server. In real life, the PLC itself either has a built-in OPC UA server or has one running in front of it. The C# client doesn't know or care that it's talking to a Node script instead of real hardware — it connects over the same OPC UA protocol either way.
+
+
 - **`client/`** — a .NET console app using the official [OPC Foundation .NET client SDK](https://github.com/OPCFoundation/UA-.NETStandard) (`OPCFoundation.NetStandard.Opc.Ua.Client`). It:
   1. Connects to the server over the real OPC UA protocol.
   2. Subscribes to `ActualSpeed` and `Running` — push notifications, not polling.
