@@ -35,7 +35,3 @@ npm start
 cd client
 dotnet run
 ```
-
-## What this is, honestly
-
-I built this as a personal side project to get hands-on with OPC UA client code, after realizing my day-to-day work sits one layer above the PLC-facing code (I work in the business-logic and orchestration layers that talk to instrument software over REST, not the OPC UA client code itself). This project is small and the "PLC" is simulated, but the protocol, the client SDK, and the failure-handling logic are all real.
